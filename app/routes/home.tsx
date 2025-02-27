@@ -2,14 +2,15 @@
  * @Author: tommy 468369392@qq.com
  * @Date: 2025-02-27 09:51:47
  * @LastEditors: Tommy 468369392@qq.com
- * @LastEditTime: 2025-02-27 22:45:42
+ * @LastEditTime: 2025-02-27 23:13:24
  * @FilePath: \my-site\app\routes\home.tsx
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
 import type { Route } from './+types/home'
 // import { Welcome } from "../welcome/welcome";
 import { Kv } from '~/webgl/kv'
-import { AnimatedBeamDemo } from '~/magicui/test'
+import { AnimatedBeamDemo } from '~/magicui/AnimatedBeamDemo'
+import { MeteorDemo } from '~/magicui/MeteorDemo'
 export function meta({}: Route.MetaArgs) {
   return [
     { title: 'New React Router App' },
@@ -25,6 +26,7 @@ export default function Home() {
       </div>
       <div className="relative w-full h-screen">
         <AnimatedBeamDemo></AnimatedBeamDemo>
+        <MeteorDemo></MeteorDemo>
       </div>
     </div>
   )
