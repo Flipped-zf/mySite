@@ -1,8 +1,8 @@
 /*
  * @Author: tommy 468369392@qq.com
  * @Date: 2025-02-27 09:51:47
- * @LastEditors: Tommy 468369392@qq.com
- * @LastEditTime: 2025-02-27 23:13:24
+ * @LastEditors: tommy 468369392@qq.com
+ * @LastEditTime: 2025-02-28 15:11:30
  * @FilePath: \my-site\app\routes\home.tsx
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -11,6 +11,9 @@ import type { Route } from './+types/home'
 import { Kv } from '~/webgl/kv'
 import { AnimatedBeamDemo } from '~/magicui/AnimatedBeamDemo'
 import { MeteorDemo } from '~/magicui/MeteorDemo'
+import { OrbitingCirclesDemo } from '~/magicui/OrbitingCirclesDemo'
+import { TiltedCardDemo } from '~/reactbits/TiltedCardDemo'
+import { HyperspeedDemo } from '~/reactbits/HyperspeedDemo'
 export function meta({}: Route.MetaArgs) {
   return [
     { title: 'New React Router App' },
@@ -24,9 +27,18 @@ export default function Home() {
       <div className="relative w-full h-screen">
         <Kv />
       </div>
-      <div className="relative w-full h-screen">
+      <div className="relative w-full">
         <AnimatedBeamDemo></AnimatedBeamDemo>
         <MeteorDemo></MeteorDemo>
+        <OrbitingCirclesDemo></OrbitingCirclesDemo>
+        {/* <div className="relative flex h-[500px] w-full flex-col items-center justify-center overflow-hidden">
+          <div className="">ok</div>
+          <div className="absolute">hello</div>
+        </div> */}
+      </div>
+      <div className="relative w-full">
+        <TiltedCardDemo></TiltedCardDemo>
+        <HyperspeedDemo></HyperspeedDemo>
       </div>
     </div>
   )

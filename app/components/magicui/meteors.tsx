@@ -1,3 +1,11 @@
+/*
+ * @Author: tommy 468369392@qq.com
+ * @Date: 2025-02-28 09:58:03
+ * @LastEditors: tommy 468369392@qq.com
+ * @LastEditTime: 2025-02-28 10:24:50
+ * @FilePath: \mySite\app\components\magicui\meteors.tsx
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ */
 "use client";
 
 import { cn } from "~/lib/utils";
@@ -19,7 +27,7 @@ export const Meteors = ({
   maxDelay = 1.2,
   minDuration = 2,
   maxDuration = 10,
-  angle = 215,
+  angle = 115,
   className,
 }: MeteorsProps) => {
   const [meteorStyles, setMeteorStyles] = useState<Array<React.CSSProperties>>(
