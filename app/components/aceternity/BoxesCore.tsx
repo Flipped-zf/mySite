@@ -2,7 +2,7 @@
  * @Author: Tommy 468369392@qq.com
  * @Date: 2025-03-02 17:26:57
  * @LastEditors: Tommy 468369392@qq.com
- * @LastEditTime: 2025-03-02 18:52:21
+ * @LastEditTime: 2025-03-02 20:33:21
  * @FilePath: /mySite/app/components/aceternity/BoxesCore.tsx
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -15,15 +15,15 @@ export const BoxesCore = ({ className, ...rest }: { className?: string }) => {
   const rows = new Array(150).fill(1)
   const cols = new Array(100).fill(1)
   let colors = [
-    '--sky-300',
-    '--pink-300',
-    '--green-300',
-    '--yellow-300',
-    '--red-300',
-    '--purple-300',
-    '--blue-300',
-    '--indigo-300',
-    '--violet-300',
+    '#0ea5e9', // --sky-300
+    '#ec4899', // --pink-300
+    '#22c55e', // --green-300
+    '#fbbf24', // --yellow-300
+    '#ef4444', // --red-300
+    '#a855f7', // --purple-300
+    '#3b82f6', // --blue-300
+    '#6366f1', // --indigo-300
+    '#8b5cf6', // --violet-300
   ]
   const getRandomColor = () => {
     return colors[Math.floor(Math.random() * colors.length)]
@@ -48,7 +48,7 @@ export const BoxesCore = ({ className, ...rest }: { className?: string }) => {
           {cols.map((_, j) => (
             <motion.div
               whileHover={{
-                backgroundColor: `var(${getRandomColor()})`,
+                backgroundColor: `${getRandomColor()}`,
                 transition: { duration: 0 },
               }}
               animate={{
