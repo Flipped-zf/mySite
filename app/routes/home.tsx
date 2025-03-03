@@ -1,8 +1,8 @@
 /*
  * @Author: tommy 468369392@qq.com
  * @Date: 2025-02-27 09:51:47
- * @LastEditors: tommy 468369392@qq.com
- * @LastEditTime: 2025-03-03 17:00:42
+ * @LastEditors: Tommy 468369392@qq.com
+ * @LastEditTime: 2025-03-03 21:41:17
  * @FilePath: \my-site\app\routes\home.tsx
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -17,6 +17,12 @@ import { HyperspeedDemo } from '~/reactbits/HyperspeedDemo'
 import { ThreeDCardDemo } from '~/aceternity/ThreeDCardDemo'
 import { AnimatedPinDemo } from '~/aceternity/AnimatedPinDemo'
 import { BackgroundBoxesDemo } from '~/aceternity/BackgroundBoxesDemo'
+import { TextPressureDemo } from '~/reactbits/TextPressureDemo'
+import { FuzzyTextDemo } from '~/reactbits/FuzzyTextDemo'
+import { TrueFocusDemo } from '~/reactbits/TrueFocusDemo'
+import { RotatingTextDemo } from '~/reactbits/RotatingTextDemo'
+import { ScrollVelocityDemo } from '~/reactbits/ScrollVelocityDemo'
+import { VariableProximityDemo } from '~/reactbits/VariableProximityDemo'
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -26,7 +32,6 @@ export function meta({}: Route.MetaArgs) {
 }
 
 export default function Home() {
-
   return (
     <div className="warp w-full min-h-[100vh]">
       <div className="relative w-full h-screen">
@@ -44,6 +49,12 @@ export default function Home() {
       <div className="relative w-full bg-ok">
         <TiltedCardDemo></TiltedCardDemo>
         <HyperspeedDemo></HyperspeedDemo>
+        <TextPressureDemo></TextPressureDemo>
+        <FuzzyTextDemo></FuzzyTextDemo>
+        <TrueFocusDemo></TrueFocusDemo>
+        <RotatingTextDemo></RotatingTextDemo>
+        <ScrollVelocityDemo></ScrollVelocityDemo>
+        <VariableProximityDemo></VariableProximityDemo>
       </div>
       <div className="relative w-full">
         <ThreeDCardDemo></ThreeDCardDemo>
