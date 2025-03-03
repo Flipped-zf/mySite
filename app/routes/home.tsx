@@ -1,8 +1,8 @@
 /*
  * @Author: tommy 468369392@qq.com
  * @Date: 2025-02-27 09:51:47
- * @LastEditors: Tommy 468369392@qq.com
- * @LastEditTime: 2025-03-02 23:00:03
+ * @LastEditors: tommy 468369392@qq.com
+ * @LastEditTime: 2025-03-03 17:00:42
  * @FilePath: \my-site\app\routes\home.tsx
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -26,6 +26,7 @@ export function meta({}: Route.MetaArgs) {
 }
 
 export default function Home() {
+
   return (
     <div className="warp w-full min-h-[100vh]">
       <div className="relative w-full h-screen">
