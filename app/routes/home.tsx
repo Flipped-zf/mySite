@@ -1,8 +1,8 @@
 /*
  * @Author: tommy 468369392@qq.com
  * @Date: 2025-02-27 09:51:47
- * @LastEditors: Tommy 468369392@qq.com
- * @LastEditTime: 2025-03-03 21:41:17
+ * @LastEditors: tommy 468369392@qq.com
+ * @LastEditTime: 2025-03-04 16:40:22
  * @FilePath: \my-site\app\routes\home.tsx
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -23,6 +23,12 @@ import { TrueFocusDemo } from '~/reactbits/TrueFocusDemo'
 import { RotatingTextDemo } from '~/reactbits/RotatingTextDemo'
 import { ScrollVelocityDemo } from '~/reactbits/ScrollVelocityDemo'
 import { VariableProximityDemo } from '~/reactbits/VariableProximityDemo'
+import { BackgroundBeamsWithCollisionDemo } from '~/aceternity/BackgroundBeamsWithCollisionDemo'
+import { CardStackDemo } from '~/aceternity/CardStackDemo'
+import { CompareDemo } from '~/aceternity/CompareDemo'
+import { CoverDemo } from '~/aceternity/CoverDemo'
+import { ExpandableCardDemo } from '~/aceternity/ExpandableCardDemo'
+import { FloatingDockDemo } from '~/aceternity/FloatingDockDemo'
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -60,6 +66,12 @@ export default function Home() {
         <ThreeDCardDemo></ThreeDCardDemo>
         <AnimatedPinDemo></AnimatedPinDemo>
         <BackgroundBoxesDemo></BackgroundBoxesDemo>
+        <BackgroundBeamsWithCollisionDemo></BackgroundBeamsWithCollisionDemo>
+        <CardStackDemo></CardStackDemo>
+        <CompareDemo></CompareDemo>
+        <CoverDemo></CoverDemo>
+        <ExpandableCardDemo></ExpandableCardDemo>
+        <FloatingDockDemo></FloatingDockDemo>
       </div>
     </div>
   )
