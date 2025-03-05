@@ -2,7 +2,7 @@
  * @Author: tommy 468369392@qq.com
  * @Date: 2025-02-27 09:51:47
  * @LastEditors: tommy 468369392@qq.com
- * @LastEditTime: 2025-03-04 16:40:22
+ * @LastEditTime: 2025-03-05 15:09:55
  * @FilePath: \my-site\app\routes\home.tsx
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -29,6 +29,9 @@ import { CompareDemo } from '~/aceternity/CompareDemo'
 import { CoverDemo } from '~/aceternity/CoverDemo'
 import { ExpandableCardDemo } from '~/aceternity/ExpandableCardDemo'
 import { FloatingDockDemo } from '~/aceternity/FloatingDockDemo'
+import { FollowingPointerDemo } from '~/aceternity/FollowingPointerDemo'
+import { LinkPreviewDemo } from '~/aceternity/LinkPreviewDemo'
+import { WobbleCardDemo } from '~/aceternity/WobbleCardDemo'
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -72,6 +75,9 @@ export default function Home() {
         <CoverDemo></CoverDemo>
         <ExpandableCardDemo></ExpandableCardDemo>
         <FloatingDockDemo></FloatingDockDemo>
+        <FollowingPointerDemo></FollowingPointerDemo>
+        <LinkPreviewDemo></LinkPreviewDemo>
+        <WobbleCardDemo></WobbleCardDemo>
       </div>
     </div>
   )

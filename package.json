@@ -9,6 +9,7 @@
     "typecheck": "react-router typegen && tsc"
   },
   "dependencies": {
+    "@radix-ui/react-hover-card": "^1.1.6",
     "@radix-ui/react-slot": "^1.1.2",
     "@react-router/node": "^7.2.0",
     "@react-router/serve": "^7.2.0",
@@ -24,6 +25,7 @@
     "lucide-react": "^0.476.0",
     "motion": "^12.4.7",
     "postprocessing": "^6.36.7",
+    "qss": "^3.0.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-router": "^7.2.0",
