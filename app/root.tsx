@@ -1,3 +1,11 @@
+/*
+ * @Author: tommy 468369392@qq.com
+ * @Date: 2025-02-28 09:58:03
+ * @LastEditors: tommy 468369392@qq.com
+ * @LastEditTime: 2025-03-10 17:25:10
+ * @FilePath: \mySite\app\root.tsx
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ */
 import {
   isRouteErrorResponse,
   Links,
@@ -7,8 +15,11 @@ import {
   ScrollRestoration,
 } from "react-router";
 
+
 import type { Route } from "./+types/root";
 import "./app.css";
+import { useEffect } from "react";
+import { createSmoothScroll } from "./uilts";
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -43,6 +54,9 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
+  useEffect(() => {
+    createSmoothScroll()
+  },[])
   return <Outlet />;
 }
 

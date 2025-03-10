@@ -155,11 +155,16 @@ export default function ParallaxImage2({
     // 添加事件监听
     const handleMouseMove = (e: MouseEvent) => {
       if (!sceneRef.current) return;
-      const halfX = window.innerWidth / 2;
-      const halfY = window.innerHeight / 2;
+      if (!containerRef.current) return;
 
-      sceneRef.current.mouseTargetX = (halfX - e.clientX) / halfX;
-      sceneRef.current.mouseTargetY = (halfY - e.clientY) / halfY;
+      const container = containerRef.current;
+      const width = container.clientWidth / 2;
+      const height = container.clientHeight / 2;
+      // const halfX = container.clientWidth / 2;
+      // const halfY = container.clientHeight / 2;
+
+      sceneRef.current.mouseTargetX = (width - e.clientX) / width;
+      sceneRef.current.mouseTargetY = (height - e.clientY) / height;
     };
     function clamp(number, lower, upper) {
       if (number === number) {
@@ -199,12 +204,15 @@ export default function ParallaxImage2({
     }
     gyro()
     window.addEventListener('resize', handleResize);
-    document.addEventListener('mousemove', handleMouseMove);
+    const container = containerRef.current;
+    if (container) {
+      container.addEventListener('mousemove', handleMouseMove);
+    }
 
     // 清理函数
     return () => {
       window.removeEventListener('resize', handleResize);
-      document.removeEventListener('mousemove', handleMouseMove);
+      container.removeEventListener('mousemove', handleMouseMove);
       if (animationFrameId.current) {
         cancelAnimationFrame(animationFrameId.current);
       }
@@ -225,7 +233,7 @@ export default function ParallaxImage2({
       className="parallax-container" 
       style={{
         width: '100%',
-        height: '100vh',
+        height: '100%',
         overflow: 'hidden'
       }}
     />
