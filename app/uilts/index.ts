@@ -1,25 +1,26 @@
 /*
  * @Author: tommy 468369392@qq.com
  * @Date: 2025-03-10 17:16:41
- * @LastEditors: tommy 468369392@qq.com
- * @LastEditTime: 2025-03-10 18:04:00
+ * @LastEditors: Tommy 468369392@qq.com
+ * @LastEditTime: 2025-03-10 21:43:37
  * @FilePath: \mySite\app\uilts\index.ts
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
+'use client'
 import Lenis from '@studio-freight/lenis';
 import { gsap } from "gsap";
-    
+import { useGSAP } from '@gsap/react'; 
 // import { Flip } from "gsap/Flip";
 // import { ScrollTrigger } from "gsap/ScrollTrigger";
-let Flip;
-let ScrollTrigger;
+// let Flip;
+// let ScrollTrigger:any;
 
 /**
  * 创建并初始化 Lenis 平滑滚动实例
  * @param options Lenis 配置选项
  * @returns Lenis 实例
  */
-export function createSmoothScroll(options?: {
+export async function createSmoothScroll(options?: {
   duration?: number;
   easing?: (t: number) => number;
   orientation?: 'vertical' | 'horizontal';
@@ -39,20 +40,24 @@ export function createSmoothScroll(options?: {
     touchMultiplier: 2,
     ...options,
   });
-  import("gsap/Flip").then((flipModule) => {
-    Flip = flipModule.Flip;
-    gsap.registerPlugin(Flip);
-  });
 
-  import("gsap/ScrollTrigger").then((flipModule) => {
-    ScrollTrigger = flipModule.ScrollTrigger;
-    gsap.registerPlugin(ScrollTrigger);
-  });
-
-  // gsap.registerPlugin(Flip,ScrollTrigger);
+  gsap.registerPlugin(useGSAP);
 
 
-  // lenis.on('scroll', () => ScrollTrigger.update());
+  // await import("gsap/Flip").then((flipModule) => {
+  //   Flip = flipModule.Flip;
+  //   gsap.registerPlugin(Flip);
+  // });
+
+  // await import("gsap/ScrollTrigger").then((flipModule) => {
+  //   ScrollTrigger = flipModule.ScrollTrigger;
+  //   gsap.registerPlugin(ScrollTrigger);
+  // });
+
+  gsap.registerPlugin(Flip,ScrollTrigger);
+
+
+  lenis.on('scroll', () => ScrollTrigger.update());
 
   // 设置 RAF 循环来更新 Lenis
   function raf(time: number) {
