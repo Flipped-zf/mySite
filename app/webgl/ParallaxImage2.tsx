@@ -248,7 +248,8 @@ const ParallaxImage2 = forwardRef<ParallaxImageHandle, ParallaxImageProps>(({
         geometry.dispose();
         material.dispose();
         renderer.dispose();
-        canvasDom.remove();
+        // canvasDom.remove();
+        container.removeChild(renderer.domElement);
         sceneRef.current = null;
       }
     };

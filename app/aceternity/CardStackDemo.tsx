@@ -1,9 +1,17 @@
+/*
+ * @Author: tommy 468369392@qq.com
+ * @Date: 2025-03-04 15:50:52
+ * @LastEditors: tommy 468369392@qq.com
+ * @LastEditTime: 2025-03-11 17:47:42
+ * @FilePath: \mySite\app\aceternity\CardStackDemo.tsx
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ */
 "use client";
 import { CardStack } from "~/components/aceternity/card-stack";
 import { cn } from "~/lib/utils";
 export function CardStackDemo() {
   return (
-    <div className="h-[40rem] flex items-center justify-center w-full">
+    <div className="flex items-center justify-center w-full">
       <CardStack items={CARDS} />
     </div>
   );
