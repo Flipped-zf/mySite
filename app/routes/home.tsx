@@ -2,13 +2,13 @@
  * @Author: tommy 468369392@qq.com
  * @Date: 2025-02-27 09:51:47
  * @LastEditors: tommy 468369392@qq.com
- * @LastEditTime: 2025-03-05 15:09:55
+ * @LastEditTime: 2025-03-11 10:45:04
  * @FilePath: \my-site\app\routes\home.tsx
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
 import type { Route } from './+types/home'
 // import { Welcome } from "../welcome/welcome";
-import { Kv } from '~/webgl/kv'
+// import { Kv } from '~/webgl/kv'
 import { AnimatedBeamDemo } from '~/magicui/AnimatedBeamDemo'
 import { MeteorDemo } from '~/magicui/MeteorDemo'
 import { OrbitingCirclesDemo } from '~/magicui/OrbitingCirclesDemo'
@@ -44,7 +44,7 @@ export default function Home() {
   return (
     <div className="warp w-full min-h-[100vh]">
       <div className="relative w-full h-screen">
-        <Kv />
+        {/* <Kv /> */}
       </div>
       <div className="relative w-full">
         <AnimatedBeamDemo></AnimatedBeamDemo>

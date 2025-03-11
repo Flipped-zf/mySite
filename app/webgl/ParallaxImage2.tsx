@@ -1,7 +1,13 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useImperativeHandle, forwardRef } from 'react';
 import * as THREE from 'three';
 import fragment from './shaders/fragment.glsl';
 import vertex from './shaders/vertex.glsl';
+
+// Add GyroNorm type definition
+declare class GyroNorm {
+  init(options: { gravityNormalized: boolean }): Promise<any>;
+  start(callback: (data: { do: { gamma: number; beta: number } }) => void): void;
+}
 
 interface ParallaxImageProps {
   imageOriginal: string;
@@ -10,14 +16,22 @@ interface ParallaxImageProps {
   verticalThreshold: number;
 }
 
-export default function ParallaxImage2({
+// Define the handle type for the component
+export interface ParallaxImageHandle {
+  pauseRendering: () => void;
+  resumeRendering: () => void;
+}
+
+// Convert to forwardRef to expose methods
+const ParallaxImage2 = forwardRef<ParallaxImageHandle, ParallaxImageProps>(({
   imageOriginal,
   imageDepth,
   horizontalThreshold,
   verticalThreshold
-}: ParallaxImageProps) {
+}, ref) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const animationFrameId = useRef<number | null>(null);
+  const isPausedRef = useRef<boolean>(false);
   const sceneRef = useRef<{
     scene: THREE.Scene;
     camera: THREE.OrthographicCamera;
@@ -31,7 +45,49 @@ export default function ParallaxImage2({
     imageAspect: number;
     geometry: THREE.PlaneGeometry;
   } | null>(null);
-  const gn = useRef(new GyroNorm())
+  const gn = useRef<GyroNorm>(new GyroNorm())
+
+  // 动画循环 - Moved outside useEffect to be accessible from useImperativeHandle
+  const animate = () => {
+    if (!sceneRef.current || isPausedRef.current) return;
+    const {
+      material,
+      scene,
+      camera,
+      renderer,
+      startTime,
+      mouseTargetX,
+      mouseTargetY
+    } = sceneRef.current;
+
+    const currentTime = (new Date().getTime() - startTime) / 1000;
+    material.uniforms.time.value = currentTime;
+
+    sceneRef.current.mouseX += (mouseTargetX - sceneRef.current.mouseX) * 0.05;
+    sceneRef.current.mouseY += (mouseTargetY - sceneRef.current.mouseY) * 0.05;
+
+    material.uniforms.mouse.value.set(sceneRef.current.mouseX, sceneRef.current.mouseY);
+
+    renderer.render(scene, camera);
+    animationFrameId.current = requestAnimationFrame(animate);
+  };
+
+  // Expose methods to parent components
+  useImperativeHandle(ref, () => ({
+    pauseRendering: () => {
+      isPausedRef.current = true;
+      if (animationFrameId.current) {
+        cancelAnimationFrame(animationFrameId.current);
+        animationFrameId.current = null;
+      }
+    },
+    resumeRendering: () => {
+      if (isPausedRef.current && !animationFrameId.current && sceneRef.current) {
+        isPausedRef.current = false;
+        animate();
+      }
+    }
+  }));
 
   useEffect(() => {
     if (!containerRef.current || sceneRef.current) return;
@@ -106,31 +162,6 @@ export default function ParallaxImage2({
       console.error('Error loading textures:', error);
     });
 
-    // 动画循环
-    const animate = () => {
-      if (!sceneRef.current) return;
-      const {
-        material,
-        scene,
-        camera,
-        renderer,
-        startTime,
-        mouseTargetX,
-        mouseTargetY
-      } = sceneRef.current;
-
-      const currentTime = (new Date().getTime() - startTime) / 1000;
-      material.uniforms.time.value = currentTime;
-
-      sceneRef.current.mouseX += (mouseTargetX - sceneRef.current.mouseX) * 0.05;
-      sceneRef.current.mouseY += (mouseTargetY - sceneRef.current.mouseY) * 0.05;
-
-      material.uniforms.mouse.value.set(sceneRef.current.mouseX, sceneRef.current.mouseY);
-
-      renderer.render(scene, camera);
-      animationFrameId.current = requestAnimationFrame(animate);
-    };
-
     // 处理窗口大小变化
     const handleResize = () => {
       if (!sceneRef.current) return;
@@ -166,7 +197,7 @@ export default function ParallaxImage2({
       sceneRef.current.mouseTargetX = (width - e.clientX) / width;
       sceneRef.current.mouseTargetY = (height - e.clientY) / height;
     };
-    function clamp(number, lower, upper) {
+    function clamp(number: number, lower: number, upper: number): number {
       if (number === number) {
         if (upper !== undefined) {
           number = number <= upper ? number : upper;
@@ -179,28 +210,22 @@ export default function ParallaxImage2({
     }
 
     const gyro =() => {
-
-  
       const maxTilt = 15;
-      
-  
       const rotationCoef = 0.15;
   
       gn.current.init({ gravityNormalized: true }).then(function() {
         gn.current.start(function(data) {
-  
+          if (!sceneRef.current) return;
+          
           let y = data.do.gamma;
           let x = data.do.beta;
   
           sceneRef.current.mouseTargetY = clamp(x,-maxTilt, maxTilt)/maxTilt;
           sceneRef.current.mouseTargetX = -clamp(y,-maxTilt, maxTilt)/maxTilt;
-  
         });
       }).catch(function(e) {
         console.log('not supported');
-  
       });
-  
     }
     gyro()
     window.addEventListener('resize', handleResize);
@@ -212,7 +237,9 @@ export default function ParallaxImage2({
     // 清理函数
     return () => {
       window.removeEventListener('resize', handleResize);
-      container.removeEventListener('mousemove', handleMouseMove);
+      if (container) {
+        container.removeEventListener('mousemove', handleMouseMove);
+      }
       if (animationFrameId.current) {
         cancelAnimationFrame(animationFrameId.current);
       }
@@ -238,4 +265,6 @@ export default function ParallaxImage2({
       }}
     />
   );
-}
+});
+
+export default ParallaxImage2;

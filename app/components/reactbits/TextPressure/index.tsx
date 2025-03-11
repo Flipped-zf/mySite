@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, forwardRef, useImperativeHandle } from 'react'
 
 interface TextPressureProps {
   text?: string
@@ -18,7 +18,13 @@ interface TextPressureProps {
   minFontSize?: number
 }
 
-const TextPressure: React.FC<TextPressureProps> = ({
+// Define the handle type for the component
+export interface TextPressureHandle {
+  pauseAnimation: () => void;
+  resumeAnimation: () => void;
+}
+
+const TextPressure = forwardRef<TextPressureHandle, TextPressureProps>(({
   text = 'Compressa',
   fontFamily = 'Compressa VF',
   fontUrl = 'https://res.cloudinary.com/dr6lvwubh/raw/upload/v1529908256/CompressaPRO-GX.woff2',
@@ -34,10 +40,12 @@ const TextPressure: React.FC<TextPressureProps> = ({
   strokeWidth = 2,
   className = '',
   minFontSize = 24,
-}) => {
+}, ref) => {
   const containerRef = useRef<HTMLDivElement | null>(null)
   const titleRef = useRef<HTMLHeadingElement | null>(null)
   const spansRef = useRef<(HTMLSpanElement | null)[]>([])
+  const animationFrameId = useRef<number | null>(null)
+  const isPausedRef = useRef<boolean>(false)
 
   const mouseRef = useRef({ x: 0, y: 0 })
   const cursorRef = useRef({ x: 0, y: 0 })
@@ -47,6 +55,23 @@ const TextPressure: React.FC<TextPressureProps> = ({
   const [lineHeight, setLineHeight] = useState(1)
 
   const chars = text.split('')
+
+  // Expose methods to parent components
+  useImperativeHandle(ref, () => ({
+    pauseAnimation: () => {
+      isPausedRef.current = true;
+      if (animationFrameId.current) {
+        cancelAnimationFrame(animationFrameId.current);
+        animationFrameId.current = null;
+      }
+    },
+    resumeAnimation: () => {
+      if (isPausedRef.current && !animationFrameId.current) {
+        isPausedRef.current = false;
+        animate();
+      }
+    }
+  }));
 
   const dist = (a: { x: number; y: number }, b: { x: number; y: number }) => {
     const dx = b.x - a.x
@@ -114,51 +139,57 @@ const TextPressure: React.FC<TextPressureProps> = ({
     return () => window.removeEventListener('resize', setSize)
   }, [scale, text])
 
-  useEffect(() => {
-    let rafId: number
-    const animate = () => {
-      mouseRef.current.x += (cursorRef.current.x - mouseRef.current.x) / 15
-      mouseRef.current.y += (cursorRef.current.y - mouseRef.current.y) / 15
+  // Define animate function outside useEffect to be accessible from useImperativeHandle
+  const animate = () => {
+    if (isPausedRef.current) return;
+    
+    mouseRef.current.x += (cursorRef.current.x - mouseRef.current.x) / 15
+    mouseRef.current.y += (cursorRef.current.y - mouseRef.current.y) / 15
 
-      if (titleRef.current) {
-        const titleRect = titleRef.current.getBoundingClientRect()
-        const maxDist = titleRect.width / 2
+    if (titleRef.current) {
+      const titleRect = titleRef.current.getBoundingClientRect()
+      const maxDist = titleRect.width / 2
 
-        spansRef.current.forEach((span) => {
-          if (!span) return
+      spansRef.current.forEach((span) => {
+        if (!span) return
 
-          const rect = span.getBoundingClientRect()
-          const charCenter = {
-            x: rect.x + rect.width / 2,
-            y: rect.y + rect.height / 2,
-          }
+        const rect = span.getBoundingClientRect()
+        const charCenter = {
+          x: rect.x + rect.width / 2,
+          y: rect.y + rect.height / 2,
+        }
 
-          const d = dist(mouseRef.current, charCenter)
+        const d = dist(mouseRef.current, charCenter)
 
-          const getAttr = (
-            distance: number,
-            minVal: number,
-            maxVal: number
-          ) => {
-            const val = maxVal - Math.abs((maxVal * distance) / maxDist)
-            return Math.max(minVal, val + minVal)
-          }
+        const getAttr = (
+          distance: number,
+          minVal: number,
+          maxVal: number
+        ) => {
+          const val = maxVal - Math.abs((maxVal * distance) / maxDist)
+          return Math.max(minVal, val + minVal)
+        }
 
-          const wdth = width ? Math.floor(getAttr(d, 5, 200)) : 100
-          const wght = weight ? Math.floor(getAttr(d, 100, 900)) : 400
-          const italVal = italic ? getAttr(d, 0, 1).toFixed(2) : '0'
-          const alphaVal = alpha ? getAttr(d, 0, 1).toFixed(2) : '1'
+        const wdth = width ? Math.floor(getAttr(d, 5, 200)) : 100
+        const wght = weight ? Math.floor(getAttr(d, 100, 900)) : 400
+        const italVal = italic ? getAttr(d, 0, 1).toFixed(2) : '0'
+        const alphaVal = alpha ? getAttr(d, 0, 1).toFixed(2) : '1'
 
-          span.style.opacity = alphaVal
-          span.style.fontVariationSettings = `'wght' ${wght}, 'wdth' ${wdth}, 'ital' ${italVal}`
-        })
-      }
-
-      rafId = requestAnimationFrame(animate)
+        span.style.opacity = alphaVal
+        span.style.fontVariationSettings = `'wght' ${wght}, 'wdth' ${wdth}, 'ital' ${italVal}`
+      })
     }
 
+    animationFrameId.current = requestAnimationFrame(animate)
+  }
+
+  useEffect(() => {
     animate()
-    return () => cancelAnimationFrame(rafId)
+    return () => {
+      if (animationFrameId.current) {
+        cancelAnimationFrame(animationFrameId.current)
+      }
+    }
   }, [width, weight, italic, alpha, chars.length])
 
   return (
@@ -219,6 +250,6 @@ const TextPressure: React.FC<TextPressureProps> = ({
       </h1>
     </div>
   )
-}
+})
 
 export default TextPressure
