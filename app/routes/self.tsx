@@ -1,8 +1,8 @@
 /*
  * @Author: Tommy 468369392@qq.com
  * @Date: 2025-03-10 20:38:55
- * @LastEditors: tommy 468369392@qq.com
- * @LastEditTime: 2025-03-11 17:54:10
+ * @LastEditors: Tommy 468369392@qq.com
+ * @LastEditTime: 2025-03-11 22:23:52
  * @FilePath: /mySite/app/routes/self.tsx
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -25,8 +25,8 @@ import { BackgroundBoxesDemo } from '~/aceternity/BackgroundBoxesDemo'
 
 // Define the interface for the Kv component ref
 interface KvRef {
-  startParallaxAnimation: () => void;
-  pauseParallaxAnimation: () => void;
+  startParallaxAnimation: () => void
+  pauseParallaxAnimation: () => void
 }
 
 export function meta({}: Route.MetaArgs) {
@@ -55,16 +55,16 @@ export default function Self() {
             // markers: true,
             pinSpacing: false,
             onUpdate: (self) => {
-              const progress = self.progress;
-              
+              const progress = self.progress
+
               if (progress > 0.5) {
-                kvRef.current?.pauseParallaxAnimation();
-                textPressureRef.current?.pauseAnimation();
+                kvRef.current?.pauseParallaxAnimation()
+                textPressureRef.current?.pauseAnimation()
               } else {
-                kvRef.current?.startParallaxAnimation();
-                textPressureRef.current?.resumeAnimation();
+                kvRef.current?.startParallaxAnimation()
+                textPressureRef.current?.resumeAnimation()
               }
-            }
+            },
           },
         })
       }, containerRef)
@@ -96,11 +96,10 @@ export default function Self() {
   )
 
   useEffect(() => {
-    document.querySelectorAll("[data-effect-1]").forEach(el => {
-      new BlurScrollEffect(el as HTMLElement);
-    });
-  },[])
-
+    document.querySelectorAll('[data-effect-1]').forEach((el) => {
+      new BlurScrollEffect(el as HTMLElement)
+    })
+  }, [])
 
   return (
     <div id="app" className="w-full">
@@ -115,11 +114,15 @@ export default function Self() {
         </div>
       </section>
 
-      <section ref={container2Ref} id="self-projects" className="w-full h-[300vh] relative">
+      <section
+        ref={container2Ref}
+        id="self-projects"
+        className="w-full h-[300vh] relative"
+      >
         <div className="pinText bg-white/60 backdrop-blur-md w-full h-auto relative shadow-lg z-20">
           <ScrollVelocityDemo></ScrollVelocityDemo>
         </div>
-        <div className="bg-background z-6 overflow-hidden">
+        <div className="bg-background z-6 overflow-hidden relative">
           <div className="flex justify-around my-[100px] ">
             <AnimatedBeamDemo></AnimatedBeamDemo>
             <CardStackDemo></CardStackDemo>

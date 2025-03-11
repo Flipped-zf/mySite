@@ -2,7 +2,7 @@
  * @Author: Tommy 468369392@qq.com
  * @Date: 2025-03-02 17:26:57
  * @LastEditors: Tommy 468369392@qq.com
- * @LastEditTime: 2025-03-02 20:33:21
+ * @LastEditTime: 2025-03-11 22:37:32
  * @FilePath: /mySite/app/components/aceternity/BoxesCore.tsx
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -12,8 +12,8 @@ import { motion } from 'framer-motion'
 import { cn } from '~/lib/utils'
 
 export const BoxesCore = ({ className, ...rest }: { className?: string }) => {
-  const rows = new Array(150).fill(1)
-  const cols = new Array(100).fill(1)
+  const rows = new Array(50).fill(1)
+  const cols = new Array(50).fill(1)
   let colors = [
     '#0ea5e9', // --sky-300
     '#ec4899', // --pink-300
@@ -32,7 +32,7 @@ export const BoxesCore = ({ className, ...rest }: { className?: string }) => {
   return (
     <div
       style={{
-        transform: `translate(-40%,-60%) skewX(-48deg) skewY(14deg) scale(0.675) rotate(0deg) translateZ(0)`,
+        transform: `translate(0,-60%) skewX(-48deg) skewY(14deg) scale(0.675) rotate(0deg) translateZ(0)`,
       }}
       className={cn(
         'absolute left-1/4 p-4 -top-1/4 flex  -translate-x-1/2 -translate-y-1/2 w-full h-full z-0 ',
